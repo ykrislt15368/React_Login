@@ -5,7 +5,7 @@ import {useNavigate} from 'react-router-dom'
 const LOGIN_URL = 'http://localhost:8000/v1/api/login';
 
 const Login = () => {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const userRef = useRef();
     const errRef = useRef();
     const [username, setUsername] = useState('');
@@ -26,7 +26,11 @@ const Login = () => {
         "password": password,
         "email": email
     }
-    function login() {
+    const login=(event)=> {
+
+        event.preventDefault();
+      // alert(`The name you entered was: ${username} ${password} ${email}`);
+        
         fetch(LOGIN_URL, {
             method: 'POST',
             mode: 'no-cors',
@@ -36,19 +40,29 @@ const Login = () => {
             },
             body: JSON.stringify(profileData)
         }).then(response => {
+            //alert(`${response}`);
             if (response.ok){
-            //    navigate('/home');
+                //alert(`The name you entered was: ${response.ok}`);
             console.log('sucess');
+            navigate("/home");
             }else{
-                // navigate('/notfound')
+               // alert(`unauthorized`);
                 console.log('unauthorized');
+                navigate("/notfound");
             }
         }).catch((error) => {
+            alert(`error`);
             console.log(error);
             setErrorMessage(error)
-            // navigate('/notfound');
+            navigate('/notfound');
         })
     }
+    
+    // const loginv=(event)=>{
+    //     event.preventDefault();
+    //     alert(`The name you entered was: ${username}`)
+    // }
+    
     return (
                 <div>
                     <div>
@@ -62,7 +76,7 @@ const Login = () => {
                         <input type="text"
                             id="username"
                             ref={userRef}
-                            autoComplete="off"
+                             autoComplete="off"
                             onChange={(e) => setUsername(e.target.value)}
                             value={username}
                             required

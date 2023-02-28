@@ -1,7 +1,13 @@
 import React from "react";
 
-export const NoPage = () => (
-    <>
-        <h1>404</h1>
-    </>
-);
+
+function NoPage() {
+    return (
+        <div>
+        <h1>Invalid Login</h1>
+    </div>
+    );
+  }
+  
+
+export default NoPage
